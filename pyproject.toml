@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "offline-voice-assistant"
+version = "0.1.0"
+description = "Demo of a fully offline on-device voice assistant pipeline for a humanoid robot."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Arpan Bom" }]
+keywords = ["voice", "offline", "whisper", "piper", "llama.cpp", "robotics"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = ["PyYAML>=6"]
+
+[project.optional-dependencies]
+stt = ["faster-whisper>=1.0.3"]
+llm = ["llama-cpp-python>=0.3.0"]
+tts = ["piper-tts>=1.2.0"]
+vad = ["webrtcvad>=2.0.10"]
+silero = ["torch", "numpy"]
+mic = ["sounddevice>=0.5", "numpy"]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[project.scripts]
+offline-voice = "offline_voice.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/applycoding/offline-voice-assistant"
+Repository = "https://github.com/applycoding/offline-voice-assistant"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 110
+src = ["src", "tests", "scripts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"
