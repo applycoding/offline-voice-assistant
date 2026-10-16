@@ -1,0 +1,44 @@
+# Real local backends. Weights are not in git. Download them with:
+#   python scripts/download_models.py --piper --llm
+# faster-whisper fetches its own model the first time you transcribe.
+mode: turn
+max_tool_rounds: 3
+
+audio:
+  sample_rate: 16000
+  frame_ms: 30
+
+vad:
+  backend: energy
+  threshold: 0.02
+  silence_ms: 700
+  min_speech_ms: 250
+  pad_ms: 150
+
+stt:
+  backend: faster-whisper
+  model: tiny
+  model_path: ""
+  language: en
+  device: cpu
+  compute_type: int8
+
+llm:
+  backend: llama-cpp
+  model_path: models/qwen2.5-0.5b-instruct-q4_k_m.gguf
+  n_ctx: 2048
+  temperature: 0.2
+  max_tokens: 256
+
+tts:
+  backend: piper
+  model_path: models/en_US-lessac-medium.onnx
+  piper_bin: piper
+  length_scale: 1.0
+
+tools:
+  enabled: true
+  weather_location: the lab
+
+latency:
+  log_path: logs/latency.jsonl

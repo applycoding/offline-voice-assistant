@@ -1,0 +1,34 @@
+# Zero-download demo. Fake STT, LLM, and TTS exercise the pipeline without weights.
+# A WAV run still performs energy VAD. The fake transcript below is what STT returns.
+mode: turn
+max_tool_rounds: 3
+
+audio:
+  sample_rate: 16000
+  frame_ms: 30
+
+vad:
+  backend: energy
+  threshold: 0.02
+  silence_ms: 400
+  min_speech_ms: 200
+  pad_ms: 120
+
+stt:
+  backend: fake
+  fake_transcript: "what time is it"
+
+llm:
+  backend: fake
+  temperature: 0.0
+  max_tokens: 128
+
+tts:
+  backend: fake
+
+tools:
+  enabled: true
+  weather_location: the lab
+
+latency:
+  log_path: logs/latency.jsonl

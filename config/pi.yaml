@@ -1,0 +1,41 @@
+# Starting point for a 64-bit Raspberry Pi 4 or 5. This is not a tuned profile
+# and it is not a benchmark. Measure your own board with `offline-voice latency`.
+mode: turn
+max_tool_rounds: 3
+
+audio:
+  sample_rate: 16000
+  frame_ms: 30
+
+vad:
+  backend: webrtcvad
+  aggressiveness: 2
+  silence_ms: 700
+  min_speech_ms: 250
+  pad_ms: 150
+
+stt:
+  backend: faster-whisper
+  model: tiny
+  language: en
+  device: cpu
+  compute_type: int8
+
+llm:
+  backend: llama-cpp
+  model_path: models/qwen2.5-0.5b-instruct-q4_k_m.gguf
+  n_ctx: 2048
+  temperature: 0.2
+  max_tokens: 128
+
+tts:
+  backend: piper
+  model_path: models/en_US-lessac-medium.onnx
+  piper_bin: piper
+
+tools:
+  enabled: true
+  weather_location: the lab
+
+latency:
+  log_path: logs/latency.jsonl
